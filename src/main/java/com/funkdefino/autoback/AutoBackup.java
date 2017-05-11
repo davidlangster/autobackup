@@ -36,7 +36,7 @@ public final class AutoBackup implements Runnable{
   public static void main(String[] args) {
 
     if(args.length < 4) {
-      System.out.println("Usage : AutoBackup [base][session][backups][period]");
+      System.out.println("Usage : AutoBackup [base][session][backups][period]<directory><ext>");
       return;
     }
 
@@ -45,10 +45,14 @@ public final class AutoBackup implements Runnable{
     String backups = args[2];
     String period  = args[3];
 
-    System.out.println(String.format("AutoBackup : %s\\%s.%s (backups=%s;period=%s)",
-                       base, session, EXT, backups, period));
+    // Default to ProTools for backwards compatibilty
+    String directory = args.length >= 5 ? args[4] : BACKUP_DIR;
+    String ext = args.length >= 6 ? args[5] : EXT;
 
-    try  {new AutoBackup(base, session, backups, period);}
+    System.out.println(String.format("AutoBackup : %s\\%s.%s (backups=%s;period=%s)",
+                       base, session, ext, backups, period));
+
+    try  {new AutoBackup(base, session, ext, directory, backups, period);}
     catch(Exception excp) {
       excp.printStackTrace();
     }
@@ -61,12 +65,16 @@ public final class AutoBackup implements Runnable{
    * Ctor.
    * @param base the session base directory.
    * @param session the session name.
+   * @param ext the session extension.
+   * @param directory the backup directory.
    * @param backups the number of backups before rollover.
    * @param period the backup period.
    * @throws Exception
    */
-  public AutoBackup(String base, String session, String backups, String period) throws Exception {
-    initialise(base, session, backups, period);
+  public AutoBackup(String base, String session, String ext, String directory,
+                    String backups, String period) throws Exception
+  {
+    initialise(base, session, ext, directory, backups, period);
   }
 
   //** ----------------------------------------- Operations (Runnable interface)
@@ -91,16 +99,19 @@ public final class AutoBackup implements Runnable{
    * Performs startup initialisation.
    * @param base the base directory.
    * @param session the session name.
+   * @param ext the session extension.
+   * @param directory the backup directory.
    * @param backups the number of backups before rollover.
    * @param period the backup period.
    * @throws Exception  on error.
    */
-  private void initialise(String base, String session, String backups,
-                          String period) throws Exception {
+  private void initialise(String base, String session, String ext, String directory,
+                          String backups, String period)
+                          throws Exception {
 
     this.session = session;
 
-    srcFile = new File(String.format("%s\\%s.%s", base, session, EXT));
+    srcFile = new File(String.format("%s\\%s.%s", base, session, ext));
     if(!srcFile.exists()) {
       throw new Exception(String.format(NO_SRC_FILE, srcFile.getAbsolutePath()));
     }
@@ -108,7 +119,7 @@ public final class AutoBackup implements Runnable{
     int nBackups = Integer.parseInt(backups);
     int nPeriod  = Integer.parseInt(period );
 
-    bkupDir = new File(String.format("%s\\%s", base, BACKUP_DIR));
+    bkupDir = new File(String.format("%s\\%s", base, directory));
     if(!bkupDir.exists()) bkupDir.mkdir();
     fileInfo  = new FileInfo(bkupDir.getAbsolutePath(), nBackups);
 

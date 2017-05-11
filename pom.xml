@@ -4,7 +4,7 @@
   <groupId>com.funkdefino</groupId>
   <artifactId>autoback</artifactId>
   <packaging>jar</packaging>
-  <name>ProTools auto backup</name>
+  <name>Session auto backup</name>
   <version>1.0</version>
   <profiles>
     <profile>
