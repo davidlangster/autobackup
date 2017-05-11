@@ -26,6 +26,7 @@ public final class AutoBackup implements Runnable{
   private String session;
   private File bkupDir;
   private File srcFile;
+  private String ext;
 
   //** ------------------------------------------------------------- Application
 
@@ -84,7 +85,7 @@ public final class AutoBackup implements Runnable{
     try {
       int sequence = fileInfo.getNextSequence(srcFile);
       if(sequence != -1) {
-         String dstFile = String.format("%s\\%s.%s.%03d.%s", bkupDir, session, BAK, sequence, EXT);
+         String dstFile = String.format("%s\\%s.%s.%03d.%s", bkupDir, session, BAK, sequence, ext);
          copyFile(srcFile, new File(dstFile));
          System.out.println("Created : " + dstFile);
       }
@@ -110,6 +111,7 @@ public final class AutoBackup implements Runnable{
                           throws Exception {
 
     this.session = session;
+    this.ext = ext;
 
     srcFile = new File(String.format("%s\\%s.%s", base, session, ext));
     if(!srcFile.exists()) {
