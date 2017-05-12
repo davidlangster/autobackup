@@ -123,7 +123,7 @@ public final class AutoBackup implements Runnable{
 
     bkupDir = new File(String.format("%s\\%s", base, directory));
     if(!bkupDir.exists()) bkupDir.mkdir();
-    fileInfo  = new FileInfo(bkupDir.getAbsolutePath(), nBackups);
+    fileInfo  = new FileInfo(bkupDir.getAbsolutePath(), ext, nBackups);
 
     scheduler = Executors.newScheduledThreadPool(1);
     scheduler.scheduleAtFixedRate(this, nPeriod, nPeriod, TimeUnit.MINUTES);

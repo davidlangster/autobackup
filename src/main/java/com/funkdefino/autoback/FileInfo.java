@@ -11,13 +11,10 @@ import java.util.Comparator;
  */
 public final class FileInfo {
 
-  //** --------------------------------------------------------------- Constants
-
-  private final static String EXTENSION = ".ptx";
-
   //** -------------------------------------------------------------------- Data
 
   private String base;
+  private String ext;
   private int    rollover;
 
   //** ------------------------------------------------------------ Construction
@@ -25,9 +22,12 @@ public final class FileInfo {
   /**
    * Ctor.
    * @param base directory base.
+   * @param ext filemname extension.
+   * @param rollover the rollover count.
    */
-  public FileInfo(String base, int rollover) {
+  public FileInfo(String base, String ext, int rollover) {
     this.rollover = rollover;
+    this.ext  = String.format(".%s", ext);
     this.base = base;
   }
 
@@ -82,8 +82,8 @@ public final class FileInfo {
     int nSequence = -1;
 
     String name = file.getName();
-    if(name.endsWith(EXTENSION)) {
-       name = name.substring(0, name.length() - EXTENSION.length());
+    if(name.endsWith(ext)) {
+       name = name.substring(0, name.length() - ext.length());
        int nIndex = name.lastIndexOf('.');
        if(nIndex != -1) {
           String sequence = name.substring(++nIndex, name.length());
