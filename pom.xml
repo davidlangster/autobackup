@@ -6,52 +6,27 @@
   <packaging>jar</packaging>
   <name>Session auto backup</name>
   <version>1.0</version>
-  <profiles>
-    <profile>
-      <id>default</id>
-      <properties>
-        <version.java>1.6</version.java>
-        <version.spring>3.2.1.RELEASE</version.spring>
-        <version.springws>2.1.2.RELEASE</version.springws>
-        <version.springweb>3.2.1.RELEASE</version.springweb>
-        <version.jdom>2.0.2</version.jdom>
-        <version.jaxb>2.2.6</version.jaxb>
-        <version.jaxb-impl>2.2.6</version.jaxb-impl>
-        <version.slf4j>1.7.2</version.slf4j>
-        <version.slf4j-log4j12>1.7.2</version.slf4j-log4j12>
-        <version.logback>1.0.9</version.logback>
-        <version.junit>4.8.1</version.junit>
-        <version.junit.addons>1.4</version.junit.addons>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      </properties>
-    </profile>
-  </profiles>
+  <properties>
+    <version.java>1.6</version.java>
+    <version.spring>3.2.1.RELEASE</version.spring>
+    <version.springws>2.1.2.RELEASE</version.springws>
+    <version.springweb>3.2.1.RELEASE</version.springweb>
+    <version.jdom>2.0.2</version.jdom>
+    <version.jaxb>2.2.6</version.jaxb>
+    <version.jaxb-impl>2.2.6</version.jaxb-impl>
+    <version.slf4j>1.7.2</version.slf4j>
+    <version.slf4j-log4j12>1.7.2</version.slf4j-log4j12>
+    <version.logback>1.0.9</version.logback>
+    <version.junit>4.8.1</version.junit>
+    <version.junit.addons>1.4</version.junit.addons>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
-    <!--dependency>
-       <groupId>org.slf4j</groupId>
-       <artifactId>slf4j-api</artifactId>
-       <version>${version.slf4j}</version>
-     </dependency>
-     <dependency>
-       <groupId>ch.qos.logback</groupId>
-       <artifactId>logback-classic</artifactId>
-       <version>${version.logback}</version>
-     </dependency>
-     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>${version.logback}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>${version.spring}</version>
-    </dependency-->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${version.junit}</version>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>
@@ -64,7 +39,7 @@
           <source>1.6</source>
           <target>1.6</target>
           <fork>true</fork>
-          <executable>${env.JAVA_HOME}/bin/javac.exe</executable>
+          <!--executable>${env.JAVA_HOME}/bin/javac.exe</executable-->
         </configuration>
       </plugin>
       <plugin>
